@@ -1,0 +1,21 @@
+python 3.14.5 | 2 transfers at once: 1->2 and 2->1
+correct outcome: 2/2 completed
+
+WITHOUT LOCK ORDERING
+  run 1: completed 0/2     4016 ms   (DEADLOCK - threads still waiting)
+  run 2: completed 0/2     4010 ms   (DEADLOCK - threads still waiting)
+  run 3: completed 0/2     4007 ms   (DEADLOCK - threads still waiting)
+  run 4: completed 0/2     4010 ms   (DEADLOCK - threads still waiting)
+  run 5: completed 0/2     4010 ms   (DEADLOCK - threads still waiting)
+
+WITH LOCK ORDERING  (always lock the lower id first)
+  run 1: completed 2/2      113 ms   (OK)
+  run 2: completed 2/2      111 ms   (OK)
+  run 3: completed 2/2      114 ms   (OK)
+  run 4: completed 2/2      112 ms   (OK)
+  run 5: completed 2/2      119 ms   (OK)
+
+==========================================================
+without ordering : 0/2 completed, both threads waiting forever
+with ordering    : 2/2 completed in ~100 ms, every single run
+==========================================================
