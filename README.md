@@ -1,25 +1,25 @@
 # explain-benchmarks
 
-Số liệu trong các video `$ explain` của mình đều do máy đo, không phải số minh hoạ.
-Repo này chứa toàn bộ script đã dùng, để ai muốn cũng kiểm chứng lại được.
+Every number in my `$ explain` videos is measured on a real machine, not illustrated.
+This repo holds the scripts behind them, so anyone can reproduce the results.
 
-Mỗi script chỉ cần **Python**, không phải cài gì thêm.
+Each script needs only **Python** — nothing to install.
 
 ```bash
-python3 11-deadlock/benchmark_deadlock.py
+python3 deadlock/benchmark_deadlock.py
 ```
 
-## Danh sách
+## Benchmarks
 
-| # | Chủ đề | Đo cái gì | Kết quả đo được |
-|---|---|---|---|
-| 11 | [Deadlock](11-deadlock/) | 2 giao dịch khoá chéo nhau | không có lock ordering: **0/2** giao dịch xong, treo vô hạn · có ordering: **2/2** xong trong ~113 ms |
+| Topic | What it measures | Measured result |
+|---|---|---|
+| [Deadlock](deadlock/) | two transfers locking each other in opposite order | without lock ordering: **0/2** transfers complete, threads wait forever · with ordering: **2/2** in ~113 ms |
 
-## Cách đọc kết quả
+## Reading the results
 
-Mỗi thư mục có `result.txt` là output thô của đúng lần chạy dùng trong video.
-Chạy lại trên máy bạn, con số có thể lệch chút theo cấu hình, nhưng kết luận thì không đổi.
+Every folder ships a `result.txt` — the raw output of the exact run used in the video.
+Numbers may shift a little on your machine, but the conclusion will not.
 
 ---
 
-Nguyễn Việt Chung — AIDev
+Nguyen Viet Chung — AIDev
