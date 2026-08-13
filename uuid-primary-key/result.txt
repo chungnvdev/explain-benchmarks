@@ -1,0 +1,36 @@
+Python 3.14.5 · sqlite3 3.53.1
+500,000 rows · payload 80 bytes · WITHOUT ROWID (clustered primary key)
+batch commit every 10,000 rows · SQLite defaults (journal=delete, synchronous=FULL)
+
+sample v4  b7ceb41bc0784e25876bf32c166e97e2  ->  e53db909658f4823889e90e1a5eb1c2c   (no order)
+sample v7  019ff9d7e170749a919136f048631fc0  ->  019ff9d7e41671d4b267ac3a920aca24   (ascending)
+
+v7 keys sorted ascending: True
+v4 keys sorted ascending: False
+
+pass 1 — order: UUIDv4 then UUIDv7
+  inserting 500,000 rows with UUIDv4 primary key ...
+    3.72 s  ·  134,375 rows/s  ·  57.7 MB  ·  14,453 pages  ·  9,447 pages rewritten by the next 10,000 inserts
+  inserting 500,000 rows with UUIDv7 primary key ...
+    0.32 s  ·  1,562,597 rows/s  ·  57.0 MB  ·  14,299 pages  ·  298 pages rewritten by the next 10,000 inserts
+
+pass 2 — order: UUIDv7 then UUIDv4
+  inserting 500,000 rows with UUIDv7 primary key ...
+    0.31 s  ·  1,606,221 rows/s  ·  57.0 MB  ·  14,299 pages  ·  298 pages rewritten by the next 10,000 inserts
+  inserting 500,000 rows with UUIDv4 primary key ...
+    3.68 s  ·  135,796 rows/s  ·  57.7 MB  ·  14,453 pages  ·  9,447 pages rewritten by the next 10,000 inserts
+
+Reporting the pass that flatters UUIDv4 most (its fastest run vs UUIDv7's slowest).
+
+RESULT
+metric                            UUIDv4        UUIDv7       ratio
+insert time (s)                     3.68          0.32      11.51x
+insert rate (rows/s)          135,795.67  1,562,596.65      11.51x
+db file (MB)                       57.68         56.98       1.01x
+pages (4 KB)                   14,453.00     14,299.00       1.01x
+bytes per row                     120.96        119.49       1.01x
+point lookup (ms)                   0.00          0.00       0.99x
+100 newest rows (ms)                0.04          0.04       0.97x
+pages rewritten / 10k ins       9,447.00        298.00      31.70x
+
+UUIDv7 writes 11.51x faster and stores the same 500,000 rows in 1.2% less disk.
