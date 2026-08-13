@@ -1,0 +1,26 @@
+python 3.14.5 · standard library only
+20,000 vectors · 64 dims · unit length (cosine = dot product)
+IVF: 128 clusters · k-means on 6,000 samples × 5 rounds
+30 queries · top-10 · recall measured against exact search
+
+building corpus ...
+building IVF index ...
+  index built in 5.6 s · cluster sizes: min 37, median 139, max 443
+
+exact search (scan everything) ...
+  23.1 ms per query · 20,000 comparisons each
+
+IVF nprobe=1     0.39 ms/query · recall@10  45.7% ·     174 vectors compared (0.9% of the collection) · 58.8x faster
+IVF nprobe=4     1.26 ms/query · recall@10  84.3% ·     709 vectors compared (3.5% of the collection) · 18.3x faster
+IVF nprobe=16    4.14 ms/query · recall@10  98.7% ·    2588 vectors compared (12.9% of the collection) · 5.6x faster
+IVF nprobe=32    8.55 ms/query · recall@10  99.7% ·    5138 vectors compared (25.7% of the collection) · 2.7x faster
+
+RESULT
+search              ms/query   recall@10   vectors seen   speedup
+exact scan              23.1      100.0%         20,000      1.0x
+IVF nprobe=1            0.39       45.7%            174     58.8x
+IVF nprobe=4            1.26       84.3%            709     18.3x
+IVF nprobe=16           4.14       98.7%          2,588      5.6x
+IVF nprobe=32           8.55       99.7%          5,138      2.7x
+
+index build cost: 5.6 s (paid once, before any query)
