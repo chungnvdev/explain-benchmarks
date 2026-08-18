@@ -1,0 +1,25 @@
+python 3.14.5 · sqlite3 3.53.1
+seed 20260819 · standard library only, nothing installed
+
+PART A — 500 payment intents, 18% of replies lost, up to 3 retries
+  calls that reached the server : 608
+  rows written, no idem key     : 608  (charged $30,400)
+  rows written, UNIQUE idem key : 500  (charged $25,000)
+  duplicate records             : 108  (21.6% of intents charged more than once)
+  money charged in excess       : $5,400
+
+PART B — 2,000 clients fail at the same instant, 3 retries each
+  retries scheduled             : 6,000
+  fixed 1s/2s/3s → peak         : 2,000 requests in one 100 ms window (3 windows used)
+  full jitter    → peak         : 369 requests in one 100 ms window (40 windows used)
+  peak reduced by               : 5.4x
+
+  arrivals per 100 ms bucket, first 40 buckets
+    fixed  : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    jitter : [365, 359, 357, 339, 369, 358, 347, 347, 366, 328, 140, 152, 130, 159, 141, 156, 151, 135, 156, 136, 49, 46, 43, 47, 44, 47, 55, 55, 48, 51, 63, 42, 46, 56, 52, 55, 50, 42, 57, 61]
+
+RESULT
+metric                               naive retry    safe retry
+records written (500 intents)                608           500
+money charged                            $30,400       $25,000
+peak load in a 100 ms window               2,000           369
