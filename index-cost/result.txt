@@ -1,0 +1,30 @@
+python 3.14.5 · sqlite3 3.53.1
+300,000 rows · payload 60 B · seed 20260821 · standard library only
+
+1. READS — SELECT id FROM events WHERE user_id = ?
+   no index :   11.691 ms per lookup
+   indexed  :    0.005 ms per lookup   -> 2,453x faster
+
+2. WRITES — inserting the same 100,000 rows
+   0 indexes  :   0.06 s
+   1 index    :   0.27 s   -> +376% slower
+   3 indexes  :   0.64 s   -> +1006% slower
+
+3. DISK
+   table only        :   23.50 MB
+   table + 1 index   :   26.74 MB   -> index costs 3.24 MB (14% bigger)
+   building it took  :    0.08 s
+
+4. WHERE THE INDEX LOSES — WHERE score > 700 matches 89,126 rows (30% of the table)
+   full table scan   :   14.73 ms
+   forced index scan :   81.99 ms   -> index is 5.6x SLOWER here
+   sqlite's own plan without hints: SCAN events
+   plan when forced onto the index: SEARCH events USING INDEX ix_score (score>?)
+
+RESULT
+metric                               without index    with index
+point lookup (ms)                           11.691         0.005
+insert 100k rows (s)                          0.06          0.27
+insert 100k rows, 3 indexes (s)                             0.64
+database file (MB)                           23.50         26.74
+wide range query (ms)                        14.73         81.99

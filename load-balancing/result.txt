@@ -1,0 +1,18 @@
+python 3.14.5 · standard library only
+4 servers · 20,000 requests · mean gap 6.5 ms
+service time: 8 ms for 94% of requests, 220 ms for 6%
+same arrival stream and same service times for every strategy
+
+offered load: 77.9% of total capacity
+
+round robin          p50   137.2 ms · p95    773.3 ms · p99   1201.0 ms · worst   2094.5 ms
+least connections    p50     5.5 ms · p95    183.2 ms · p99    289.8 ms · worst    433.1 ms
+power of two         p50    18.0 ms · p95    301.6 ms · p99    438.0 ms · worst    777.3 ms
+
+RESULT  (queue wait, milliseconds)
+strategy                  p50       p95       p99     worst   p99 vs RR
+round robin             137.2     773.3    1201.0    2094.5           —
+least connections         5.5     183.2     289.8     433.1 4.1x better
+power of two             18.0     301.6     438.0     777.3 2.7x better
+
+Same servers, same traffic, one line of config: p99 wait 1201 ms -> 290 ms (4.1x better).

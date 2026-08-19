@@ -17,6 +17,8 @@ python3 uuid-primary-key/benchmark_uuid.py
 | [UUID primary key](uuid-primary-key/) | UUIDv4 vs UUIDv7 as a clustered primary key | 500,000 inserts: **3.68 s** vs **0.32 s** (11.51x) · pages rewritten per 10k inserts: **9,447** vs **298** (31.70x) · file size identical |
 | [Vector search](vector-search/) | exact scan vs IVF clusters, speed **and** recall | nprobe=1: **58.8x** faster at **45.7%** recall · nprobe=16: **5.6x** faster at **98.7%** recall |
 | [Safe retry](safe-retry/) | blind retry vs idempotency key + full jitter | 500 intents wrote **608 rows** (108 duplicates) vs **500** · retry peak **2,000** &rarr; **369** per 100 ms |
+| [Load balancing](load-balancing/) | round robin vs least connections vs power of two | wait p99 **1,201 ms** &rarr; **290 ms** (4.1x), median **137 ms** &rarr; **5.5 ms** (25x) |
+| [Index cost](index-cost/) | what an index gives and what it takes | reads **2,453x faster** · writes **+376%** (3 indexes +1,006%) · disk **+14%** · wide range **5.6x slower** |
 
 ## Reading the results
 
