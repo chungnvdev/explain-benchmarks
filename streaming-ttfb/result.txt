@@ -1,0 +1,36 @@
+STREAMING vs BUFFERED - time to first byte
+==========================================================
+answer length      : 300 tokens
+work per token     : 60000 SHA-256 rounds = 14.41 ms
+repeats            : 7 (A/B interleaved; median and best-of)
+
+M1  TIME TO FIRST BYTE
+    buffered      4462.7 ms
+    streaming        6.5 ms
+    -> first byte arrives 687x sooner when streaming
+
+M2  TIME TO LAST BYTE (the full answer)
+    buffered   median  4.463 s   best  4.043 s   range 4.043-4.514
+    streaming  median  4.125 s   best  4.063 s   range 4.063-4.154
+    -> best-of differs by +0.5%, well inside the run-to-run spread:
+       streaming does NOT make the full answer arrive sooner
+
+M3  BYTES ON THE WIRE (chunked framing overhead)
+    buffered        2255 bytes
+    streaming       3766 bytes
+    -> +1511 bytes (+67.0%) for the same text
+
+M4  WHAT THE READER HAS AFTER 1.0 s / 2.0 s
+    buffered      0 tokens @1s      0 tokens @2s   (0% / 0% of the answer)
+    stream       72 tokens @1s    144 tokens @2s   (24% / 48% of the answer)
+
+M5  READER CLOSES THE TAB AFTER 2 s
+    buffered        0 bytes received =   0/300 tokens (0% usable)
+    stream       1877 bytes received = 143/300 tokens (48% usable)
+
+M6  WHAT THE SERVER BURNS ON A READER WHO ALREADY LEFT
+    buffered   kept generating 300/300 tokens = 4.17 s of CPU before noticing
+    stream     kept generating 144/300 tokens = 2.01 s of CPU before noticing
+    -> streaming stopped at 48% of the work, buffered at 100%
+
+Wall-clock time on this machine; nothing sleeps inside a measurement.

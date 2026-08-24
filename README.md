@@ -19,6 +19,7 @@ python3 uuid-primary-key/benchmark_uuid.py
 | [Safe retry](safe-retry/) | blind retry vs idempotency key + full jitter | 500 intents wrote **608 rows** (108 duplicates) vs **500** · retry peak **2,000** &rarr; **369** per 100 ms |
 | [Load balancing](load-balancing/) | round robin vs least connections vs power of two | wait p99 **1,201 ms** &rarr; **290 ms** (4.1x), median **137 ms** &rarr; **5.5 ms** (25x) |
 | [Index cost](index-cost/) | what an index gives and what it takes | reads **2,453x faster** · writes **+376%** (3 indexes +1,006%) · disk **+14%** · wide range **5.6x slower** |
+| [Streaming vs buffered](streaming-ttfb/) | when the first byte arrives, and what streaming costs | first byte **4,462.7 ms** &rarr; **6.5 ms** (687x) · total time **+0.5%** (unchanged) · wire **+67% bytes** · at 2.0 s: **0/300** vs **144/300** tokens |
 
 ## Reading the results
 
