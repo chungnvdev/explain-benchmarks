@@ -1,0 +1,50 @@
+Tower of Hanoi, n = 5 disks, A -> C
+total moves: 31  (2^5 - 1 = 31)
+
+move  1: disk 1  A -> C   (call depth 5)
+move  2: disk 2  A -> B   (call depth 4)
+move  3: disk 1  C -> B   (call depth 5)
+move  4: disk 3  A -> C   (call depth 3)
+move  5: disk 1  B -> A   (call depth 5)
+move  6: disk 2  B -> C   (call depth 4)
+move  7: disk 1  A -> C   (call depth 5)
+move  8: disk 4  A -> B   (call depth 2)
+move  9: disk 1  C -> B   (call depth 5)
+move 10: disk 2  C -> A   (call depth 4)
+move 11: disk 1  B -> A   (call depth 5)
+move 12: disk 3  C -> B   (call depth 3)
+move 13: disk 1  A -> C   (call depth 5)
+move 14: disk 2  A -> B   (call depth 4)
+move 15: disk 1  C -> B   (call depth 5)
+move 16: disk 5  A -> C   (call depth 1)
+move 17: disk 1  B -> A   (call depth 5)
+move 18: disk 2  B -> C   (call depth 4)
+move 19: disk 1  A -> C   (call depth 5)
+move 20: disk 3  B -> A   (call depth 3)
+move 21: disk 1  C -> B   (call depth 5)
+move 22: disk 2  C -> A   (call depth 4)
+move 23: disk 1  B -> A   (call depth 5)
+move 24: disk 4  B -> C   (call depth 2)
+move 25: disk 1  A -> C   (call depth 5)
+move 26: disk 2  A -> B   (call depth 4)
+move 27: disk 1  C -> B   (call depth 5)
+move 28: disk 3  A -> C   (call depth 3)
+move 29: disk 1  B -> A   (call depth 5)
+move 30: disk 2  B -> C   (call depth 4)
+move 31: disk 1  A -> C   (call depth 5)
+
+disk 1 moved 16 times  (2^(n-k) = 16)
+disk 2 moved  8 times  (2^(n-k) = 8)
+disk 3 moved  4 times  (2^(n-k) = 4)
+disk 4 moved  2 times  (2^(n-k) = 2)
+disk 5 moved  1 times  (2^(n-k) = 1)
+
+bigger towers (move counting only):
+n =  5:         31 moves  solved in        0.0 ms
+n = 10:      1,023 moves  solved in        0.1 ms
+n = 15:     32,767 moves  solved in        2.4 ms
+n = 20:  1,048,575 moves  solved in       77.3 ms
+n = 24: 16,777,215 moves  solved in     1229.4 ms
+
+every extra disk doubles the work — 64 disks would need 2^64 - 1 moves,
+about 585 billion years at one move per second.
