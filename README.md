@@ -21,6 +21,7 @@ python3 uuid-primary-key/benchmark_uuid.py
 | [Index cost](index-cost/) | what an index gives and what it takes | reads **2,453x faster** · writes **+376%** (3 indexes +1,006%) · disk **+14%** · wide range **5.6x slower** |
 | [Streaming vs buffered](streaming-ttfb/) | when the first byte arrives, and what streaming costs | first byte **4,462.7 ms** &rarr; **6.5 ms** (687x) · total time **+0.5%** (unchanged) · wire **+67% bytes** · at 2.0 s: **0/300** vs **144/300** tokens |
 | [Tower of Hanoi](tower-of-hanoi/) | the recursive move trace, and how 2^n grows | n=5: **31 moves**, disk 1 moves **16x**, disk 5 **once** · n=20: **1,048,575 moves** in ~77 ms · n=24: **16.7M moves** in ~1.2 s |
+| [Bubble sort](bubble-sort/) | the swap-by-swap trace, and the real cost of O(n^2) | video array: **45 compares, 23 swaps** · n=1,000: **19.2 ms** vs sorted() **0.06 ms** (330x) · n=4,000: **1,224x slower** |
 
 ## Reading the results
 
